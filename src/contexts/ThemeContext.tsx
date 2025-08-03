@@ -25,21 +25,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    // Load preferences from localStorage on client side
-    const savedPreferences = localStorage.getItem('reading-preferences');
-    if (savedPreferences) {
-      try {
-        setPreferences(JSON.parse(savedPreferences));
-      } catch (error) {
-        console.error('Error parsing saved preferences:', error);
-      }
-    }
     setIsLoaded(true);
   }, []);
 
   const updatePreferences = (newPreferences: ReadingPreferences) => {
     setPreferences(newPreferences);
-    localStorage.setItem('reading-preferences', JSON.stringify(newPreferences));
   };
 
   const getThemeClasses = () => {

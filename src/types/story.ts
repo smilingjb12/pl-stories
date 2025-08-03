@@ -3,6 +3,14 @@ export interface Story {
   title: string;
   filename: string;
   content: string;
+  isRead: boolean;
+}
+
+export interface StoryMetadata {
+  id: string;
+  title: string;
+  filename: string;
+  isRead: boolean;
 }
 
 export interface ReadingPreferences {
