@@ -19,7 +19,7 @@ export default function Header({
   const router = useRouter();
 
   return (
-    <header className="sticky top-0 z-40 surface-elevated border-b border-border backdrop-blur-sm p-4">
+    <header className="sticky top-0 z-40 glassmorphism border-b border-border/30 p-4">
       <div className="flex items-center justify-between max-w-4xl mx-auto">
         {showBackButton ? (
           <button
@@ -35,7 +35,7 @@ export default function Header({
           <div className="w-20"></div>
         )}
         
-        <h1 className="text-lg font-semibold truncate mx-4 text-primary text-center flex-1">
+        <h1 className="text-lg font-semibold truncate mx-4 text-primary text-center flex-1 bg-gradient-to-r from-primary-600 to-primary-400 bg-clip-text text-transparent">
           {title}
         </h1>
         

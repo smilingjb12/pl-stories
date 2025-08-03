@@ -4,7 +4,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { ReadingPreferences } from '@/types/story';
 
 const defaultPreferences: ReadingPreferences = {
-  fontSize: 16,
+  fontSize: 20,
   fontFamily: 'lato',
   theme: 'light',
   lineHeight: 'relaxed',

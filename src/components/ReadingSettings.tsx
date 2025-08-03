@@ -34,10 +34,6 @@ export default function ReadingSettings({
     switch (preferences.theme) {
       case "dark":
         return "bg-gray-800 text-gray-100";
-      case "sepia":
-        return "bg-amber-100 text-amber-900";
-      case "high-contrast":
-        return "bg-gray-900 text-white";
       default:
         return "bg-white text-gray-800";
     }
@@ -47,10 +43,6 @@ export default function ReadingSettings({
     switch (preferences.theme) {
       case "dark":
         return "text-gray-400 hover:text-gray-200";
-      case "sepia":
-        return "text-amber-700 hover:text-amber-900";
-      case "high-contrast":
-        return "text-gray-300 hover:text-white";
       default:
         return "text-gray-500 hover:text-gray-700";
     }
@@ -66,11 +58,11 @@ export default function ReadingSettings({
 
       {/* Side Panel */}
       <div
-        className={`absolute right-0 top-0 h-full w-80 max-w-[90vw] shadow-2xl pointer-events-auto transform transition-transform duration-300 ease-out overflow-y-auto ${getModalClasses()}`}
+        className="absolute right-0 top-0 h-full w-80 max-w-[90vw] glassmorphism shadow-2xl pointer-events-auto transform transition-transform duration-300 ease-out overflow-y-auto"
       >
         <div className="p-6 h-full flex flex-col">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-semibold">Reading Settings</h2>
+            <h2 className="text-xl font-semibold gradient-text">Reading Settings</h2>
             <button
               onClick={onClose}
               className={`text-2xl ${getCloseButtonClasses()}`}
@@ -151,8 +143,8 @@ export default function ReadingSettings({
                     onClick={() => updatePreference("fontFamily", font)}
                     className={`w-full p-3 text-left rounded-lg border transition-all duration-200 ${
                       preferences.fontFamily === font
-                        ? "bg-primary-500 text-white border-primary-500 shadow-md"
-                        : "border-border hover:border-primary-300 hover:shadow-sm"
+                        ? "bg-gradient-to-r from-primary-500 to-primary-600 text-white border-primary-500 shadow-lg"
+                        : "border-border hover:border-primary-300 hover:shadow-sm hover:bg-gradient-to-r hover:from-surface-elevated/50 hover:to-surface/30"
                     } ${
                       font === "montserrat"
                         ? "font-montserrat"
@@ -213,8 +205,8 @@ export default function ReadingSettings({
                       onClick={() => updatePreference("theme", theme)}
                       className={`p-2 text-center rounded-lg border transition-all duration-200 ${
                         preferences.theme === theme
-                          ? "bg-primary-500 text-white border-primary-500 shadow-md"
-                          : "border-border hover:border-primary-300 hover:shadow-sm"
+                          ? "bg-gradient-to-r from-primary-500 to-primary-600 text-white border-primary-500 shadow-lg"
+                          : "border-border hover:border-primary-300 hover:shadow-sm hover:bg-gradient-to-r hover:from-surface-elevated/50 hover:to-surface/30"
                       }`}
                     >
                       {theme.charAt(0).toUpperCase() +
@@ -237,8 +229,8 @@ export default function ReadingSettings({
                     onClick={() => updatePreference("lineHeight", height)}
                     className={`p-2 text-center rounded-lg border transition-all duration-200 ${
                       preferences.lineHeight === height
-                        ? "bg-primary-500 text-white border-primary-500 shadow-md"
-                        : "border-border hover:border-primary-300 hover:shadow-sm"
+                        ? "bg-gradient-to-r from-primary-500 to-primary-600 text-white border-primary-500 shadow-lg"
+                        : "border-border hover:border-primary-300 hover:shadow-sm hover:bg-gradient-to-r hover:from-surface-elevated/50 hover:to-surface/30"
                     }`}
                   >
                     {height.charAt(0).toUpperCase() + height.slice(1)}
@@ -259,8 +251,8 @@ export default function ReadingSettings({
                     onClick={() => updatePreference("letterSpacing", spacing)}
                     className={`p-2 text-center rounded-lg border transition-all duration-200 ${
                       preferences.letterSpacing === spacing
-                        ? "bg-primary-500 text-white border-primary-500 shadow-md"
-                        : "border-border hover:border-primary-300 hover:shadow-sm"
+                        ? "bg-gradient-to-r from-primary-500 to-primary-600 text-white border-primary-500 shadow-lg"
+                        : "border-border hover:border-primary-300 hover:shadow-sm hover:bg-gradient-to-r hover:from-surface-elevated/50 hover:to-surface/30"
                     }`}
                   >
                     {spacing.charAt(0).toUpperCase() + spacing.slice(1)}

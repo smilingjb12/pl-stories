@@ -10,8 +10,8 @@ export default function ThemeSelector() {
   const themes = [
     { value: 'light', label: 'Light', icon: '☀️' },
     { value: 'dark', label: 'Dark', icon: '🌙' },
-    { value: 'sepia', label: 'Sepia', icon: '📜' },
-    { value: 'high-contrast', label: 'High Contrast', icon: '⚫' },
+    { value: 'sepia', label: 'Sepia', icon: '📖' },
+    { value: 'high-contrast', label: 'High Contrast', icon: '🔍' },
   ] as const;
 
   const currentTheme = themes.find(theme => theme.value === preferences.theme);
@@ -49,14 +49,14 @@ export default function ThemeSelector() {
             className="fixed inset-0 z-10"
             onClick={() => setIsOpen(false)}
           />
-          <div className="absolute right-0 top-full mt-2 w-48 surface-elevated rounded-xl shadow-xl z-20">
+          <div className="absolute right-0 top-full mt-2 w-48 glassmorphism rounded-xl shadow-xl z-20">
             <div className="py-2">
               {themes.map((theme) => (
                 <button
                   key={theme.value}
                   onClick={() => handleThemeChange(theme.value)}
-                  className={`w-full text-left px-4 py-3 text-sm transition-all duration-200 hover:surface ${
-                    preferences.theme === theme.value ? 'font-semibold text-primary' : 'text-secondary'
+                  className={`w-full text-left px-4 py-3 text-sm transition-all duration-200 hover:bg-surface rounded-lg ${
+                    preferences.theme === theme.value ? 'font-semibold gradient-text bg-surface' : 'text-secondary hover:text-primary'
                   }`}
                 >
                   <span className="mr-3">{theme.icon}</span>

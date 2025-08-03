@@ -123,16 +123,18 @@ export default function StoryPage() {
         showSettings={true}
         onSettingsClick={() => setShowSettings(true)}
       />
-      <ProgressBar />
 
       {/* Story Content */}
-      <main className="max-w-4xl mx-auto p-8">
+      <main className="max-w-4xl mx-auto p-8 relative">
+        {/* Decorative background gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br pointer-events-none" />
         <article
           className={`
             ${getFontFamilyClass()} 
             ${getLineHeightClass()} 
             ${getLetterSpacingClass()}
-            max-w-none prose-lg reading-text text-primary
+            max-w-none prose-lg reading-text text-primary relative z-10
+            rounded-2xl p-8
           `}
           style={{
             opacity: preferences.textOpacity,
@@ -143,7 +145,9 @@ export default function StoryPage() {
             {loading ? (
               <div className="text-center text-secondary py-16">
                 <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary mb-4"></div>
-                <div>Loading story...</div>
+                <div className="loading-gradient p-4 rounded-lg">
+                  Loading story...
+                </div>
               </div>
             ) : story ? (
               story.content
@@ -157,12 +161,12 @@ export default function StoryPage() {
 
         {/* Mark as Read Button */}
         {!loading && story && (
-          <div className="max-w-3xl mx-auto mt-12 pt-8 border-t border-border">
+          <div className="max-w-3xl mx-auto mt-12 pt-8 border-t border-border/30">
             <div className="flex justify-center">
               {story.isRead ? (
                 <button
                   onClick={handleMarkAsUnread}
-                  className="flex items-center space-x-2 px-6 py-3 bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 rounded-lg hover:bg-green-200 dark:hover:bg-green-800 transition-colors"
+                  className="flex items-center space-x-3 px-8 py-4 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-xl hover:from-emerald-600 hover:to-emerald-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-emerald-500/25"
                 >
                   <svg
                     className="w-5 h-5"
@@ -171,12 +175,12 @@ export default function StoryPage() {
                   >
                     <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
                   </svg>
-                  <span>Mark as Unread</span>
+                  <span className="font-semibold">Mark as Unread</span>
                 </button>
               ) : (
                 <button
                   onClick={handleMarkAsRead}
-                  className="flex items-center space-x-2 px-6 py-3 btn-primary"
+                  className="flex items-center space-x-3 px-8 py-4 btn-primary"
                 >
                   <svg
                     className="w-5 h-5"
@@ -191,7 +195,7 @@ export default function StoryPage() {
                       d="M5 13l4 4L19 7"
                     />
                   </svg>
-                  <span>Mark as Read</span>
+                  <span className="font-semibold">Mark as Read</span>
                 </button>
               )}
             </div>
