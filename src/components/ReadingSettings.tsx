@@ -198,7 +198,7 @@ export default function ReadingSettings({
                 Color Theme
               </label>
               <div className="grid grid-cols-2 gap-2">
-                {(["light", "dark", "sepia", "high-contrast"] as const).map(
+                {(["light", "dark"] as const).map(
                   (theme) => (
                     <button
                       key={theme}

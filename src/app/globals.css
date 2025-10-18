@@ -56,33 +56,6 @@
   --color-text-muted: 148, 163, 184;
 }
 
-/* Sepia theme for comfortable reading */
-[data-theme="sepia"] {
-  --color-background: 32, 28, 20;
-  --color-surface: 40, 35, 26;
-  --color-surface-elevated: 48, 42, 32;
-  --color-border: 64, 56, 44;
-  --color-border-light: 80, 70, 56;
-  
-  --color-text-primary: 245, 240, 220;
-  --color-text-secondary: 220, 210, 185;
-  --color-text-muted: 180, 170, 145;
-}
-
-/* High contrast theme */
-[data-theme="high-contrast"] {
-  --color-background: 0, 0, 0;
-  --color-surface: 15, 15, 15;
-  --color-surface-elevated: 25, 25, 25;
-  --color-border: 100, 100, 100;
-  --color-border-light: 150, 150, 150;
-  
-  --color-text-primary: 255, 255, 255;
-  --color-text-secondary: 230, 230, 230;
-  --color-text-muted: 180, 180, 180;
-}
-
-
 body {
   color: rgb(var(--color-text-primary));
   background: rgb(var(--color-background));

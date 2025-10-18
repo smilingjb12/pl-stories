@@ -16,7 +16,7 @@ export interface StoryMetadata {
 export interface ReadingPreferences {
   fontSize: number; // 12 to 24 (px)
   fontFamily: 'montserrat' | 'lato' | 'poppins' | 'playfair' | 'source-sans' | 'raleway';
-  theme: 'light' | 'dark' | 'sepia' | 'high-contrast';
+  theme: 'light' | 'dark';
   lineHeight: 'normal' | 'relaxed' | 'loose';
   letterSpacing: 'normal' | 'wide' | 'wider';
   textOpacity: number; // 0.3 to 1.0

@@ -25,7 +25,7 @@ This is a Next.js 15 reading application for Polish stories with customizable re
 ### Core Structure
 
 - **File-based story management**: Stories are stored as `.txt` files in the `/stories` directory, automatically loaded and served via API routes
-- **Theme system**: Custom theme context with data attributes (`data-theme`) for light/dark/sepia/high-contrast modes
+- **Theme system**: Custom theme context with data attributes (`data-theme`) for light/dark modes
 - **Reading preferences**: Font size, family, line height, letter spacing, and text opacity stored in localStorage
 - **Mobile-first responsive design**: Optimized for mobile reading with sticky headers and touch-friendly controls
 

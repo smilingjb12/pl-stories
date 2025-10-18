@@ -1,72 +1,49 @@
 'use client';
 
-import { useState } from 'react';
 import { useTheme } from '@/contexts/ThemeContext';
 
 export default function ThemeSelector() {
   const { preferences, updatePreferences } = useTheme();
-  const [isOpen, setIsOpen] = useState(false);
 
   const themes = [
     { value: 'light', label: 'Light', icon: '☀️' },
     { value: 'dark', label: 'Dark', icon: '🌙' },
-    { value: 'sepia', label: 'Sepia', icon: '📖' },
-    { value: 'high-contrast', label: 'High Contrast', icon: '🔍' },
   ] as const;
 
-  const currentTheme = themes.find(theme => theme.value === preferences.theme);
-
   const handleThemeChange = (theme: typeof preferences.theme) => {
+    if (preferences.theme === theme) {
+      return;
+    }
+
     updatePreferences({
       ...preferences,
       theme,
     });
-    setIsOpen(false);
   };
 
-
   return (
-    <div className="relative">
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="btn-secondary flex items-center space-x-2"
-      >
-        <span>{currentTheme?.icon}</span>
-        <span className="text-sm">{currentTheme?.label}</span>
-        <svg
-          className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-        </svg>
-      </button>
+    <div className="inline-flex rounded-lg border border-border bg-surface-elevated/50 p-1">
+      {themes.map((theme) => {
+        const isActive = preferences.theme === theme.value;
 
-      {isOpen && (
-        <>
-          <div
-            className="fixed inset-0 z-10"
-            onClick={() => setIsOpen(false)}
-          />
-          <div className="absolute right-0 top-full mt-2 w-48 glassmorphism rounded-xl shadow-xl z-20">
-            <div className="py-2">
-              {themes.map((theme) => (
-                <button
-                  key={theme.value}
-                  onClick={() => handleThemeChange(theme.value)}
-                  className={`w-full text-left px-4 py-3 text-sm transition-all duration-200 hover:bg-surface rounded-lg ${
-                    preferences.theme === theme.value ? 'font-semibold gradient-text bg-surface' : 'text-secondary hover:text-primary'
-                  }`}
-                >
-                  <span className="mr-3">{theme.icon}</span>
-                  {theme.label}
-                </button>
-              ))}
-            </div>
-          </div>
-        </>
-      )}
+        return (
+          <button
+            key={theme.value}
+            onClick={() => handleThemeChange(theme.value)}
+            className={`flex h-10 w-10 items-center justify-center text-lg transition-all duration-200 rounded-md ${
+              isActive
+                ? 'bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-lg'
+                : 'text-secondary hover:text-primary hover:bg-surface'
+            }`}
+            type="button"
+            aria-pressed={isActive}
+            aria-label={theme.label}
+            title={theme.label}
+          >
+            <span>{theme.icon}</span>
+          </button>
+        );
+      })}
     </div>
   );
 }
