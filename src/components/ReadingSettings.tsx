@@ -57,12 +57,10 @@ export default function ReadingSettings({
       />
 
       {/* Side Panel */}
-      <div
-        className="absolute right-0 top-0 h-full w-80 max-w-[90vw] glassmorphism shadow-2xl pointer-events-auto transform transition-transform duration-300 ease-out overflow-y-auto"
-      >
+      <div className="absolute right-0 top-0 h-full w-80 max-w-[90vw] glassmorphism shadow-2xl pointer-events-auto transform transition-transform duration-300 ease-out overflow-y-auto">
         <div className="p-6 h-full flex flex-col">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-semibold gradient-text">Reading Settings</h2>
+            <h2 className="text-xl font-semibold">Reading Settings</h2>
             <button
               onClick={onClose}
               className={`text-2xl ${getCloseButtonClasses()}`}
@@ -143,20 +141,20 @@ export default function ReadingSettings({
                     onClick={() => updatePreference("fontFamily", font)}
                     className={`w-full p-3 text-left rounded-lg border transition-all duration-200 ${
                       preferences.fontFamily === font
-                        ? "bg-gradient-to-r from-primary-500 to-primary-600 text-white border-primary-500 shadow-lg"
-                        : "border-border hover:border-primary-300 hover:shadow-sm hover:bg-gradient-to-r hover:from-surface-elevated/50 hover:to-surface/30"
+                        ? "text-primary border-primary shadow-lg"
+                        : "border-border hover:border-primary hover:shadow-sm hover:bg-gradient-to-r hover:from-surface-elevated/50 hover:to-surface/30"
                     } ${
                       font === "montserrat"
                         ? "font-montserrat"
                         : font === "lato"
-                        ? "font-lato"
-                        : font === "poppins"
-                        ? "font-poppins"
-                        : font === "playfair"
-                        ? "font-playfair"
-                        : font === "source-sans"
-                        ? "font-source-sans"
-                        : "font-raleway"
+                          ? "font-lato"
+                          : font === "poppins"
+                            ? "font-poppins"
+                            : font === "playfair"
+                              ? "font-playfair"
+                              : font === "source-sans"
+                                ? "font-source-sans"
+                                : "font-raleway"
                     }`}
                   >
                     <div className="flex flex-col">
@@ -164,27 +162,27 @@ export default function ReadingSettings({
                         {font === "montserrat"
                           ? "Montserrat"
                           : font === "lato"
-                          ? "Lato"
-                          : font === "poppins"
-                          ? "Poppins"
-                          : font === "playfair"
-                          ? "Playfair Display"
-                          : font === "source-sans"
-                          ? "Source Sans Pro"
-                          : "Raleway"}
+                            ? "Lato"
+                            : font === "poppins"
+                              ? "Poppins"
+                              : font === "playfair"
+                                ? "Playfair Display"
+                                : font === "source-sans"
+                                  ? "Source Sans Pro"
+                                  : "Raleway"}
                       </span>
                       <span className="text-xs opacity-75 mt-1">
                         {font === "montserrat"
                           ? "Modern classic elegance"
                           : font === "lato"
-                          ? "Serious but friendly"
-                          : font === "poppins"
-                          ? "Rounded & widely popular"
-                          : font === "playfair"
-                          ? "Elegant serif with contrast"
-                          : font === "source-sans"
-                          ? "Adobe's professional font"
-                          : "Sleek & sophisticated"}
+                            ? "Serious but friendly"
+                            : font === "poppins"
+                              ? "Rounded & widely popular"
+                              : font === "playfair"
+                                ? "Elegant serif with contrast"
+                                : font === "source-sans"
+                                  ? "Adobe's professional font"
+                                  : "Sleek & sophisticated"}
                       </span>
                     </div>
                   </button>
@@ -198,22 +196,20 @@ export default function ReadingSettings({
                 Color Theme
               </label>
               <div className="grid grid-cols-2 gap-2">
-                {(["light", "dark"] as const).map(
-                  (theme) => (
-                    <button
-                      key={theme}
-                      onClick={() => updatePreference("theme", theme)}
-                      className={`p-2 text-center rounded-lg border transition-all duration-200 ${
-                        preferences.theme === theme
-                          ? "bg-gradient-to-r from-primary-500 to-primary-600 text-white border-primary-500 shadow-lg"
-                          : "border-border hover:border-primary-300 hover:shadow-sm hover:bg-gradient-to-r hover:from-surface-elevated/50 hover:to-surface/30"
-                      }`}
-                    >
-                      {theme.charAt(0).toUpperCase() +
-                        theme.slice(1).replace("-", " ")}
-                    </button>
-                  )
-                )}
+                {(["light", "dark"] as const).map((theme) => (
+                  <button
+                    key={theme}
+                    onClick={() => updatePreference("theme", theme)}
+                    className={`p-2 text-center rounded-lg border transition-all duration-200 ${
+                      preferences.theme === theme
+                        ? "bg-primary text-primary-foreground border-primary shadow-lg"
+                        : "border-border hover:border-primary hover:shadow-sm hover:bg-gradient-to-r hover:from-surface-elevated/50 hover:to-surface/30"
+                    }`}
+                  >
+                    {theme.charAt(0).toUpperCase() +
+                      theme.slice(1).replace("-", " ")}
+                  </button>
+                ))}
               </div>
             </div>
 
@@ -229,8 +225,8 @@ export default function ReadingSettings({
                     onClick={() => updatePreference("lineHeight", height)}
                     className={`p-2 text-center rounded-lg border transition-all duration-200 ${
                       preferences.lineHeight === height
-                        ? "bg-gradient-to-r from-primary-500 to-primary-600 text-white border-primary-500 shadow-lg"
-                        : "border-border hover:border-primary-300 hover:shadow-sm hover:bg-gradient-to-r hover:from-surface-elevated/50 hover:to-surface/30"
+                        ? "bg-primary text-primary-foreground border-primary shadow-lg"
+                        : "border-border hover:border-primary hover:shadow-sm hover:bg-gradient-to-r hover:from-surface-elevated/50 hover:to-surface/30"
                     }`}
                   >
                     {height.charAt(0).toUpperCase() + height.slice(1)}
@@ -251,8 +247,8 @@ export default function ReadingSettings({
                     onClick={() => updatePreference("letterSpacing", spacing)}
                     className={`p-2 text-center rounded-lg border transition-all duration-200 ${
                       preferences.letterSpacing === spacing
-                        ? "bg-gradient-to-r from-primary-500 to-primary-600 text-white border-primary-500 shadow-lg"
-                        : "border-border hover:border-primary-300 hover:shadow-sm hover:bg-gradient-to-r hover:from-surface-elevated/50 hover:to-surface/30"
+                        ? "bg-primary text-primary-foreground border-primary shadow-lg"
+                        : "border-border hover:border-primary hover:shadow-sm hover:bg-gradient-to-r hover:from-surface-elevated/50 hover:to-surface/30"
                     }`}
                   >
                     {spacing.charAt(0).toUpperCase() + spacing.slice(1)}

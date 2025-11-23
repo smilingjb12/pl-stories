@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import { useTheme } from '@/contexts/ThemeContext';
+import { useTheme } from "@/contexts/ThemeContext";
 
 export default function ThemeSelector() {
   const { preferences, updatePreferences } = useTheme();
 
   const themes = [
-    { value: 'light', label: 'Light', icon: '☀️' },
-    { value: 'dark', label: 'Dark', icon: '🌙' },
+    { value: "light", label: "Light", icon: "☀️" },
+    { value: "dark", label: "Dark", icon: "🌙" },
   ] as const;
 
   const handleThemeChange = (theme: typeof preferences.theme) => {
@@ -32,8 +32,8 @@ export default function ThemeSelector() {
             onClick={() => handleThemeChange(theme.value)}
             className={`flex h-10 w-10 items-center justify-center text-lg transition-all duration-200 rounded-md ${
               isActive
-                ? 'bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-lg'
-                : 'text-secondary hover:text-primary hover:bg-surface'
+                ? "border border-primary text-primary-foreground shadow-lg"
+                : "text-secondary hover:text-primary hover:bg-surface"
             }`}
             type="button"
             aria-pressed={isActive}

@@ -35,11 +35,39 @@ export default function Home() {
     }
   };
 
+  const readStories = stories.filter((story) => story.isRead).length;
+  const totalStories = stories.length;
+  const progressPercentage =
+    totalStories > 0 ? (readStories / totalStories) * 100 : 0;
+
   return (
     <>
       <Header title="Polish Stories" />
       <div className="container mx-auto px-6 py-12 max-w-4xl">
-        <div className="mb-10"></div>
+        {!loading && totalStories > 0 && (
+          <div className="mb-10">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-sm font-medium text-foreground">
+                Reading Progress
+              </span>
+              <span className="text-sm text-muted-foreground">
+                {readStories} / {totalStories} stories
+              </span>
+            </div>
+            <div
+              className="relative w-full h-2 rounded-full overflow-hidden"
+              style={{ background: `var(--border)` }}
+            >
+              <div
+                className="h-full transition-all duration-300 ease-out"
+                style={{
+                  width: `${progressPercentage}%`,
+                  background: `var(--primary)`,
+                }}
+              />
+            </div>
+          </div>
+        )}
 
         <div className="space-y-2">
           {stories.map((story) => (
@@ -51,7 +79,7 @@ export default function Home() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   {story.isRead && (
-                    <div className="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0">
+                    <div className="w-5 h-5 rounded-full bg-primary flex items-center justify-center flex-shrink-0">
                       <svg
                         className="w-3 h-3 text-white"
                         fill="currentColor"

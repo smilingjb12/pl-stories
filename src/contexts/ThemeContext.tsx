@@ -38,7 +38,15 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (isLoaded) {
-      document.documentElement.setAttribute('data-theme', preferences.theme);
+      const htmlElement = document.documentElement;
+      // Set data-theme attribute for backward compatibility
+      htmlElement.setAttribute('data-theme', preferences.theme);
+      // Toggle dark class for new theme system
+      if (preferences.theme === 'dark') {
+        htmlElement.classList.add('dark');
+      } else {
+        htmlElement.classList.remove('dark');
+      }
     }
   }, [preferences.theme, isLoaded]);
 

@@ -166,7 +166,7 @@ export default function StoryPage() {
               {story.isRead ? (
                 <button
                   onClick={handleMarkAsUnread}
-                  className="flex items-center space-x-3 px-8 py-4 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-xl hover:from-emerald-600 hover:to-emerald-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-emerald-500/25"
+                  className="flex items-center space-x-3 px-8 py-4 bg-primary text-primary-foreground rounded-xl hover:opacity-90 transition-all duration-300 transform hover:scale-105 shadow-lg"
                 >
                   <svg
                     className="w-5 h-5"

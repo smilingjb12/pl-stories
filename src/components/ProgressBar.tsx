@@ -20,12 +20,12 @@ export default function ProgressBar() {
   }, []);
 
   return (
-    <div className="relative w-full h-1" style={{ background: `rgb(var(--color-border))` }}>
+    <div className="relative w-full h-1" style={{ background: `var(--border)` }}>
       <div 
         className="h-full transition-all duration-150 ease-out"
         style={{ 
           width: `${progress}%`,
-          background: `rgb(var(--color-primary))`
+          background: `var(--primary)`
         }}
       />
     </div>
