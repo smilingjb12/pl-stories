@@ -83,6 +83,15 @@ export default function StoryPage() {
     }
   };
 
+  const getTextAlignClass = () => {
+    switch (preferences.textAlign) {
+      case "justify":
+        return "text-justify";
+      default:
+        return "text-left";
+    }
+  };
+
   const handleMarkAsRead = async () => {
     if (params.id && story) {
       try {
@@ -127,6 +136,7 @@ export default function StoryPage() {
             ${getFontFamilyClass()} 
             ${getLineHeightClass()} 
             ${getLetterSpacingClass()}
+            ${getTextAlignClass()}
             max-w-none prose-lg reading-text text-primary relative z-10
             rounded-2xl px-6 py-8
           `}
