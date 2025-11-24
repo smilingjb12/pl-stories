@@ -206,6 +206,28 @@ export default function ReadingSettings({
                 ))}
               </div>
             </div>
+
+            {/* Text Alignment */}
+            <div>
+              <label className="block text-sm font-medium mb-2">
+                Text Alignment
+              </label>
+              <div className="grid grid-cols-2 gap-2">
+                {(["left", "justify"] as const).map((align) => (
+                  <button
+                    key={align}
+                    onClick={() => updatePreference("textAlign", align)}
+                    className={`p-2 text-center rounded-lg border transition-all duration-200 ${
+                      preferences.textAlign === align
+                        ? "bg-primary text-primary-foreground border-primary shadow-lg"
+                        : "border-border hover:border-primary hover:shadow-sm hover:bg-gradient-to-r hover:from-surface-elevated/50 hover:to-surface/30"
+                    }`}
+                  >
+                    {align.charAt(0).toUpperCase() + align.slice(1)}
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>
