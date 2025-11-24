@@ -119,7 +119,7 @@ export default function StoryPage() {
       />
 
       {/* Story Content */}
-      <main className="max-w-4xl mx-auto p-8 relative">
+      <main className="max-w-4xl mx-auto py-8 relative">
         {/* Decorative background gradient */}
         <div className="absolute inset-0 bg-gradient-to-br pointer-events-none" />
         <article
@@ -128,7 +128,7 @@ export default function StoryPage() {
             ${getLineHeightClass()} 
             ${getLetterSpacingClass()}
             max-w-none prose-lg reading-text text-primary relative z-10
-            rounded-2xl p-8
+            rounded-2xl px-6 py-8
           `}
           style={{
             opacity: preferences.textOpacity,
