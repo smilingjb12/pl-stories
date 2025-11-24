@@ -27,7 +27,13 @@ export default function Home() {
   const fetchStories = async () => {
     try {
       const storiesData = await convex.query(api.stories.listMetadata);
-      setStories(storiesData);
+      // Sort stories by ID numeric value if possible
+      const sortedStories = storiesData.sort((a: any, b: any) => {
+        const idA = parseInt(a.id);
+        const idB = parseInt(b.id);
+        return isNaN(idA) || isNaN(idB) ? a.id.localeCompare(b.id) : idA - idB;
+      });
+      setStories(sortedStories);
     } catch (error) {
       console.error("Error fetching stories:", error);
     } finally {
@@ -40,67 +46,83 @@ export default function Home() {
   const progressPercentage =
     totalStories > 0 ? (readStories / totalStories) * 100 : 0;
 
+  const getStorySlug = (filename: string) => {
+    return filename.replace(".txt", "");
+  };
+
   return (
     <>
       <Header title="Polish Stories" />
-      <div className="container mx-auto px-6 py-12 max-w-4xl">
-        {!loading && totalStories > 0 && (
-          <div className="mb-10">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-sm font-medium text-foreground">
-                Reading Progress
-              </span>
-              <span className="text-sm text-muted-foreground">
-                {readStories} / {totalStories} stories
-              </span>
-            </div>
-            <div
-              className="relative w-full h-2 rounded-full overflow-hidden"
-              style={{ background: `var(--border)` }}
-            >
+      <div className="min-h-screen bg-background text-foreground">
+        <div className="max-w-2xl mx-auto px-6 pt-6 pb-12">
+          {!loading && totalStories > 0 && (
+            <div className="mb-10">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-base font-medium text-muted-foreground">
+                  Reading Progress
+                </span>
+                <span className="text-base font-medium text-foreground">
+                  {readStories} / {totalStories} stories
+                </span>
+              </div>
               <div
-                className="h-full transition-all duration-300 ease-out"
+                className="relative w-full h-4 rounded-full overflow-hidden"
                 style={{
-                  width: `${progressPercentage}%`,
-                  background: `var(--primary)`,
+                  backgroundColor:
+                    "color-mix(in oklch, var(--primary) 20%, transparent)",
                 }}
-              />
+              >
+                <div
+                  className="h-full transition-all duration-500 ease-out bg-primary rounded-full"
+                  style={{
+                    width: `${progressPercentage}%`,
+                  }}
+                />
+              </div>
             </div>
-          </div>
-        )}
+          )}
 
-        <div className="space-y-2">
-          {stories.map((story) => (
-            <Link
-              key={story.id}
-              href={`/story/${story.id}`}
-              className="group block p-4 rounded-lg border border-border hover:bg-muted/50 transition-colors duration-200"
-            >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  {story.isRead && (
-                    <div className="w-5 h-5 rounded-full bg-primary flex items-center justify-center flex-shrink-0">
+          <div className="space-y-0 divide-y divide-white/10">
+            {stories.map((story) => (
+              <Link
+                key={story.id}
+                href={`/story/${story.id}`}
+                className="group flex items-center justify-between py-5 transition-colors duration-200"
+              >
+                <div className="flex items-center gap-5 flex-1 min-w-0">
+                  <div
+                    className={`w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0 transition-colors duration-300 ${
+                      story.isRead
+                        ? "bg-primary text-primary-foreground"
+                        : "bg-muted text-muted-foreground"
+                    }`}
+                  >
+                    {story.isRead ? (
                       <svg
-                        className="w-3 h-3 text-white"
+                        className="w-7 h-7"
                         fill="currentColor"
                         viewBox="0 0 24 24"
                       >
                         <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
                       </svg>
-                    </div>
-                  )}
-                  <div className="min-w-0">
-                    <h3 className="font-medium text-foreground group-hover:text-primary transition-colors">
+                    ) : (
+                      <span className="font-medium text-sm opacity-50">
+                        {story.id}
+                      </span>
+                    )}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <h3 className="font-bold text-foreground text-lg uppercase tracking-wide mb-1">
                       {story.title}
                     </h3>
-                    <p className="text-sm text-muted-foreground">
-                      Story #{story.id.replace(/^\D*/, "")}
+                    <p className="text-md text-accent truncate font-medium">
+                      Story #{getStorySlug(story.filename)}
                     </p>
                   </div>
                 </div>
-                <div className="text-muted-foreground group-hover:text-foreground transition-colors">
+                <div className="text-muted-foreground ml-4 flex-shrink-0 group-hover:text-primary transition-colors duration-200">
                   <svg
-                    className="w-5 h-5"
+                    className="w-6 h-6"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -108,14 +130,14 @@ export default function Home() {
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      strokeWidth="2"
+                      strokeWidth="2.5"
                       d="M9 5l7 7-7 7"
                     />
                   </svg>
                 </div>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
     </>

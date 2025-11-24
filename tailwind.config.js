@@ -8,20 +8,18 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        'montserrat': ['Montserrat', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
+        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
         'lato': ['Lato', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
-        'poppins': ['Poppins', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
         'playfair': ['Playfair Display', 'Georgia', 'Times New Roman', 'serif'],
-        'source-sans': ['Source Sans Pro', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
-        'raleway': ['Raleway', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
         
         // Legacy compatibility
-        'sans': ['Lato', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
+        'sans': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
         'serif': ['Playfair Display', 'Georgia', 'Times New Roman', 'serif'],
       },
       colors: {
         primary: {
           DEFAULT: 'var(--primary)',
+          foreground: 'var(--primary-foreground)',
           50: 'var(--primary)',
           100: 'var(--primary)',
           200: 'var(--primary)',

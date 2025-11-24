@@ -19,13 +19,13 @@ export default function Header({
   const router = useRouter();
 
   return (
-    <header className="sticky top-0 z-40 glassmorphism border-b border-border/30 p-4">
+    <header className="sticky top-0 z-40 bg-background/95 backdrop-blur-sm p-4">
       <div className="flex items-center justify-between max-w-4xl mx-auto">
         {/* Left side */}
         {showBackButton ? (
           <button
             onClick={() => router.push("/")}
-            className="flex items-center space-x-2 text-primary hover:opacity-80 transition-colors btn-secondary"
+            className="flex items-center space-x-2 text-muted-foreground hover:text-foreground transition-colors"
           >
             <svg
               className="w-5 h-5"
@@ -47,7 +47,7 @@ export default function Header({
         )}
 
         {/* Title */}
-        <h1 className="text-lg font-semibold truncate mx-4 text-primary text-center flex-1">
+        <h1 className="text-xl font-bold truncate mx-4 text-foreground text-center flex-1">
           {title}
         </h1>
 
@@ -56,7 +56,7 @@ export default function Header({
           {showSettings && onSettingsClick && (
             <button
               onClick={onSettingsClick}
-              className="btn-secondary p-2 text-primary hover:opacity-80 transition-colors"
+              className="p-2 text-muted-foreground hover:text-foreground transition-colors"
               aria-label="Settings"
               title="Settings"
             >

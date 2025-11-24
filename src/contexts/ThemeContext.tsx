@@ -5,7 +5,7 @@ import { ReadingPreferences } from "@/types/story";
 
 const defaultPreferences: ReadingPreferences = {
   fontSize: 20,
-  fontFamily: "lato",
+  fontFamily: "inter",
   theme: "light",
   lineHeight: "relaxed",
   letterSpacing: "normal",
@@ -33,6 +33,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       const stored = localStorage.getItem(STORAGE_KEY);
       if (stored) {
         const parsed = JSON.parse(stored);
+        // Migrate deprecated fontFamily values
+        if (parsed.fontFamily === "source-sans") {
+          parsed.fontFamily = "inter";
+        }
         // Merge stored preferences with defaults to handle missing fields
         setPreferences({ ...defaultPreferences, ...parsed });
       }

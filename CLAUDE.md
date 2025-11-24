@@ -47,4 +47,4 @@ Stories are text files named with pattern `{number}-{title}.txt`. The system aut
 
 ### Styling System
 
-Uses Tailwind with custom CSS variables for theming. Font families are configured as Tailwind font utilities (font-montserrat, font-lato, etc.). Theme switching is handled via data attributes on the document element.
+Uses Tailwind with custom CSS variables for theming. Font families are configured as Tailwind font utilities (font-inter, font-lato, etc.). Theme switching is handled via data attributes on the document element. Inter is the default font family.

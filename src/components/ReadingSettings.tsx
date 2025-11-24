@@ -126,16 +126,7 @@ export default function ReadingSettings({
                 Font Family
               </label>
               <div className="grid grid-cols-1 gap-2">
-                {(
-                  [
-                    "montserrat",
-                    "lato",
-                    "poppins",
-                    "playfair",
-                    "source-sans",
-                    "raleway",
-                  ] as const
-                ).map((font) => (
+                {(["inter", "lato", "playfair"] as const).map((font) => (
                   <button
                     key={font}
                     onClick={() => updatePreference("fontFamily", font)}
@@ -144,70 +135,29 @@ export default function ReadingSettings({
                         ? "text-primary border-primary shadow-lg"
                         : "border-border hover:border-primary hover:shadow-sm hover:bg-gradient-to-r hover:from-surface-elevated/50 hover:to-surface/30"
                     } ${
-                      font === "montserrat"
-                        ? "font-montserrat"
+                      font === "inter"
+                        ? "font-inter"
                         : font === "lato"
                           ? "font-lato"
-                          : font === "poppins"
-                            ? "font-poppins"
-                            : font === "playfair"
-                              ? "font-playfair"
-                              : font === "source-sans"
-                                ? "font-source-sans"
-                                : "font-raleway"
+                          : "font-playfair"
                     }`}
                   >
                     <div className="flex flex-col">
                       <span className="font-medium">
-                        {font === "montserrat"
-                          ? "Montserrat"
+                        {font === "inter"
+                          ? "Inter"
                           : font === "lato"
                             ? "Lato"
-                            : font === "poppins"
-                              ? "Poppins"
-                              : font === "playfair"
-                                ? "Playfair Display"
-                                : font === "source-sans"
-                                  ? "Source Sans Pro"
-                                  : "Raleway"}
+                            : "Playfair Display"}
                       </span>
                       <span className="text-xs opacity-75 mt-1">
-                        {font === "montserrat"
+                        {font === "inter"
                           ? "Modern classic elegance"
                           : font === "lato"
                             ? "Serious but friendly"
-                            : font === "poppins"
-                              ? "Rounded & widely popular"
-                              : font === "playfair"
-                                ? "Elegant serif with contrast"
-                                : font === "source-sans"
-                                  ? "Adobe's professional font"
-                                  : "Sleek & sophisticated"}
+                            : "Elegant serif with contrast"}
                       </span>
                     </div>
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Theme */}
-            <div>
-              <label className="block text-sm font-medium mb-2">
-                Color Theme
-              </label>
-              <div className="grid grid-cols-2 gap-2">
-                {(["light", "dark"] as const).map((theme) => (
-                  <button
-                    key={theme}
-                    onClick={() => updatePreference("theme", theme)}
-                    className={`p-2 text-center rounded-lg border transition-all duration-200 ${
-                      preferences.theme === theme
-                        ? "bg-primary text-primary-foreground border-primary shadow-lg"
-                        : "border-border hover:border-primary hover:shadow-sm hover:bg-gradient-to-r hover:from-surface-elevated/50 hover:to-surface/30"
-                    }`}
-                  >
-                    {theme.charAt(0).toUpperCase() +
-                      theme.slice(1).replace("-", " ")}
                   </button>
                 ))}
               </div>

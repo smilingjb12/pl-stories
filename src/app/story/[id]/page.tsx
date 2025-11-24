@@ -72,20 +72,14 @@ export default function StoryPage() {
 
   const getFontFamilyClass = () => {
     switch (preferences.fontFamily) {
-      case "montserrat":
-        return "font-montserrat";
+      case "inter":
+        return "font-inter";
       case "lato":
         return "font-lato";
-      case "poppins":
-        return "font-poppins";
       case "playfair":
         return "font-playfair";
-      case "source-sans":
-        return "font-source-sans";
-      case "raleway":
-        return "font-raleway";
       default:
-        return "font-lato";
+        return "font-inter";
     }
   };
 
