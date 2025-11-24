@@ -174,7 +174,7 @@ export default function StoryPage() {
               ) : (
                 <button
                   onClick={handleMarkAsRead}
-                  className="flex items-center space-x-3 px-8 py-4 btn-primary"
+                  className="flex items-center space-x-3 px-8 py-4 bg-transparent border border-border text-foreground rounded-xl hover:bg-muted/50 transition-all duration-300"
                 >
                   <svg
                     className="w-5 h-5"
