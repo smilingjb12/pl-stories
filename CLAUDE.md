@@ -20,7 +20,7 @@ npm run lint
 
 ## Architecture Overview
 
-This is a Next.js 15 reading application for Polish stories with customizable reading preferences. The app uses TypeScript, React 19, and Tailwind CSS for styling.
+This is a Next.js 16 reading application for Polish stories with customizable reading preferences. The app uses TypeScript, React 19, and Tailwind CSS for styling.
 
 ### Core Structure
 

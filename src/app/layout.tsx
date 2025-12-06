@@ -1,14 +1,33 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { DM_Sans, Crimson_Pro, Cormorant_Garamond } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 
-const inter = Inter({ subsets: ["latin"] });
+const dmSans = DM_Sans({
+  subsets: ["latin", "latin-ext"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-dm-sans",
+  display: "swap",
+});
+
+const crimsonPro = Crimson_Pro({
+  subsets: ["latin", "latin-ext"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-crimson",
+  display: "swap",
+});
+
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin", "latin-ext"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-cormorant",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
-  title: "Story Reader",
-  description: "A mobile-friendly reading app for Polish stories",
+  title: "Polish Stories",
+  description: "A warm, sophisticated reading experience for Polish stories",
 };
 
 export default function RootLayout({
@@ -17,8 +36,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pl" suppressHydrationWarning>
-      <body className={inter.className}>
+    <html
+      lang="pl"
+      suppressHydrationWarning
+      className={`${dmSans.variable} ${crimsonPro.variable} ${cormorant.variable}`}
+    >
+      <body className={`${dmSans.className} antialiased`}>
         <Script
           id="theme-init"
           strategy="beforeInteractive"

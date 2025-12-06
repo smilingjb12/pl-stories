@@ -1,6 +1,6 @@
 "use client";
 
-import { useTheme } from "@/contexts/ThemeContext";
+import { useEffect, useRef } from "react";
 import { ReadingPreferences } from "@/types/story";
 
 interface ReadingSettingsProps {
@@ -10,13 +10,44 @@ interface ReadingSettingsProps {
   onClose: () => void;
 }
 
+// Close icon
+const CloseIcon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+  </svg>
+);
+
 export default function ReadingSettings({
   preferences,
   onPreferencesChange,
   isOpen,
   onClose,
 }: ReadingSettingsProps) {
-  const { getThemeClasses } = useTheme();
+  const panelRef = useRef<HTMLDivElement>(null);
+
+  // Handle escape key
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isOpen) {
+        onClose();
+      }
+    };
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [isOpen, onClose]);
+
+  // Handle click outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (panelRef.current && !panelRef.current.contains(e.target as Node)) {
+        onClose();
+      }
+    };
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
@@ -30,182 +61,195 @@ export default function ReadingSettings({
     });
   };
 
-  const getModalClasses = () => {
-    switch (preferences.theme) {
-      case "dark":
-        return "bg-gray-800 text-gray-100";
-      default:
-        return "bg-white text-gray-800";
-    }
-  };
+  const lineHeightOptions = [
+    { value: "normal", label: "Compact" },
+    { value: "relaxed", label: "Relaxed" },
+    { value: "loose", label: "Spacious" },
+  ] as const;
 
-  const getCloseButtonClasses = () => {
-    switch (preferences.theme) {
-      case "dark":
-        return "text-gray-400 hover:text-gray-200";
-      default:
-        return "text-gray-500 hover:text-gray-700";
-    }
-  };
+  const letterSpacingOptions = [
+    { value: "normal", label: "Normal" },
+    { value: "wide", label: "Wide" },
+    { value: "wider", label: "Wider" },
+  ] as const;
 
   return (
-    <div className="fixed inset-0 z-50 pointer-events-none">
+    <div className="fixed inset-0 z-50">
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-black bg-opacity-10 pointer-events-auto"
-        onClick={onClose}
+        className="absolute inset-0 bg-black/20 backdrop-blur-sm animate-fade-in"
+        style={{ animationDuration: "0.2s" }}
       />
 
       {/* Side Panel */}
-      <div className="absolute right-0 top-0 h-full w-80 max-w-[90vw] glassmorphism shadow-2xl pointer-events-auto transform transition-transform duration-300 ease-out overflow-y-auto">
-        <div className="p-6 h-full flex flex-col">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-semibold">Reading Settings</h2>
+      <div
+        ref={panelRef}
+        className="absolute right-0 top-0 h-full w-full max-w-sm
+          glassmorphism shadow-2xl
+          animate-slide-in-right overflow-hidden"
+      >
+        <div className="h-full flex flex-col">
+          {/* Header */}
+          <div className="flex items-center justify-between p-5 border-b border-border/30">
+            <div>
+              <h2 className="text-xl font-semibold text-foreground">
+                Reading Settings
+              </h2>
+              <p className="text-sm text-text-muted mt-0.5">
+                Customize your reading experience
+              </p>
+            </div>
             <button
               onClick={onClose}
-              className={`text-2xl ${getCloseButtonClasses()}`}
+              className="p-2 rounded-lg text-text-muted hover:text-foreground
+                hover:bg-surface transition-all duration-200"
+              aria-label="Close settings"
             >
-              ×
+              <CloseIcon className="w-5 h-5" />
             </button>
           </div>
 
-          <div className="space-y-6 flex-1">
+          {/* Content */}
+          <div className="flex-1 overflow-y-auto p-5 space-y-8">
             {/* Font Size */}
-            <div>
-              <label className="block text-sm font-medium mb-2">
-                Font Size
-              </label>
-              <div className="space-y-3">
-                <div className="flex items-center justify-between text-xs text-muted">
-                  <span>Smaller</span>
-                  <span>{preferences.fontSize}px</span>
-                  <span>Larger</span>
-                </div>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <label className="text-sm font-medium text-foreground">
+                  Font Size
+                </label>
+                <span className="text-sm font-semibold text-primary">
+                  {preferences.fontSize}px
+                </span>
+              </div>
+              <div className="space-y-2">
                 <input
                   type="range"
-                  min="12"
-                  max="24"
+                  min="14"
+                  max="28"
                   step="1"
                   value={preferences.fontSize}
                   onChange={(e) =>
                     updatePreference("fontSize", parseInt(e.target.value))
                   }
-                  className="w-full h-2 bg-surface rounded-lg appearance-none cursor-pointer slider"
+                  className="slider w-full"
                 />
+                <div className="flex justify-between text-xs text-text-muted">
+                  <span>Smaller</span>
+                  <span>Larger</span>
+                </div>
               </div>
             </div>
 
             {/* Text Opacity */}
-            <div>
-              <label className="block text-sm font-medium mb-2">
-                Text Opacity
-              </label>
-              <div className="space-y-3">
-                <div className="flex items-center justify-between text-xs text-muted">
-                  <span>Lighter</span>
-                  <span>{Math.round(preferences.textOpacity * 100)}%</span>
-                  <span>Darker</span>
-                </div>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <label className="text-sm font-medium text-foreground">
+                  Text Opacity
+                </label>
+                <span className="text-sm font-semibold text-primary">
+                  {Math.round(preferences.textOpacity * 100)}%
+                </span>
+              </div>
+              <div className="space-y-2">
                 <input
                   type="range"
-                  min="0.3"
+                  min="0.5"
                   max="1.0"
-                  step="0.1"
+                  step="0.05"
                   value={preferences.textOpacity}
                   onChange={(e) =>
                     updatePreference("textOpacity", parseFloat(e.target.value))
                   }
-                  className="w-full h-2 bg-surface rounded-lg appearance-none cursor-pointer slider"
+                  className="slider w-full"
                 />
-              </div>
-            </div>
-
-            {/* Font Family */}
-            <div>
-              <label className="block text-sm font-medium mb-2">
-                Font Family
-              </label>
-              <div className="grid grid-cols-1 gap-2">
-                {(["inter", "lato", "playfair"] as const).map((font) => (
-                  <button
-                    key={font}
-                    onClick={() => updatePreference("fontFamily", font)}
-                    className={`w-full p-3 text-left rounded-lg border transition-all duration-200 ${
-                      preferences.fontFamily === font
-                        ? "text-primary border-primary shadow-lg"
-                        : "border-border hover:border-primary hover:shadow-sm hover:bg-gradient-to-r hover:from-surface-elevated/50 hover:to-surface/30"
-                    } ${
-                      font === "inter"
-                        ? "font-inter"
-                        : font === "lato"
-                          ? "font-lato"
-                          : "font-playfair"
-                    }`}
-                  >
-                    <div className="flex flex-col">
-                      <span className="font-medium">
-                        {font === "inter"
-                          ? "Inter"
-                          : font === "lato"
-                            ? "Lato"
-                            : "Playfair Display"}
-                      </span>
-                      <span className="text-xs opacity-75 mt-1">
-                        {font === "inter"
-                          ? "Modern classic elegance"
-                          : font === "lato"
-                            ? "Serious but friendly"
-                            : "Elegant serif with contrast"}
-                      </span>
-                    </div>
-                  </button>
-                ))}
+                <div className="flex justify-between text-xs text-text-muted">
+                  <span>Softer</span>
+                  <span>Darker</span>
+                </div>
               </div>
             </div>
 
             {/* Line Height */}
-            <div>
-              <label className="block text-sm font-medium mb-2">
+            <div className="space-y-3">
+              <label className="text-sm font-medium text-foreground block">
                 Line Height
               </label>
               <div className="grid grid-cols-3 gap-2">
-                {(["normal", "relaxed", "loose"] as const).map((height) => (
+                {lineHeightOptions.map((option) => (
                   <button
-                    key={height}
-                    onClick={() => updatePreference("lineHeight", height)}
-                    className={`p-2 text-center rounded-lg border transition-all duration-200 ${
-                      preferences.lineHeight === height
-                        ? "bg-primary text-primary-foreground border-primary shadow-lg"
-                        : "border-border hover:border-primary hover:shadow-sm hover:bg-gradient-to-r hover:from-surface-elevated/50 hover:to-surface/30"
-                    }`}
+                    key={option.value}
+                    onClick={() => updatePreference("lineHeight", option.value)}
+                    className={`
+                      px-3 py-2.5 rounded-lg text-sm font-medium
+                      transition-all duration-300
+                      ${preferences.lineHeight === option.value
+                        ? "bg-primary text-white shadow-md shadow-primary/25"
+                        : "bg-surface text-text-secondary hover:bg-surface-elevated hover:text-foreground border border-border/50"
+                      }
+                    `}
                   >
-                    {height.charAt(0).toUpperCase() + height.slice(1)}
+                    {option.label}
                   </button>
                 ))}
               </div>
             </div>
 
-            {/* Line Spacing */}
-            <div>
-              <label className="block text-sm font-medium mb-2">
-                Line Spacing
+            {/* Letter Spacing */}
+            <div className="space-y-3">
+              <label className="text-sm font-medium text-foreground block">
+                Letter Spacing
               </label>
               <div className="grid grid-cols-3 gap-2">
-                {(["normal", "wide", "wider"] as const).map((spacing) => (
+                {letterSpacingOptions.map((option) => (
                   <button
-                    key={spacing}
-                    onClick={() => updatePreference("letterSpacing", spacing)}
-                    className={`p-2 text-center rounded-lg border transition-all duration-200 ${
-                      preferences.letterSpacing === spacing
-                        ? "bg-primary text-primary-foreground border-primary shadow-lg"
-                        : "border-border hover:border-primary hover:shadow-sm hover:bg-gradient-to-r hover:from-surface-elevated/50 hover:to-surface/30"
-                    }`}
+                    key={option.value}
+                    onClick={() => updatePreference("letterSpacing", option.value)}
+                    className={`
+                      px-3 py-2.5 rounded-lg text-sm font-medium
+                      transition-all duration-300
+                      ${preferences.letterSpacing === option.value
+                        ? "bg-primary text-white shadow-md shadow-primary/25"
+                        : "bg-surface text-text-secondary hover:bg-surface-elevated hover:text-foreground border border-border/50"
+                      }
+                    `}
                   >
-                    {spacing.charAt(0).toUpperCase() + spacing.slice(1)}
+                    {option.label}
                   </button>
                 ))}
               </div>
             </div>
+
+            {/* Preview */}
+            <div className="space-y-3">
+              <label className="text-sm font-medium text-foreground block">
+                Preview
+              </label>
+              <div className="p-4 rounded-xl bg-surface border border-border/50">
+                <p
+                  className={`
+                    reading-text text-text-primary
+                    ${preferences.lineHeight === "normal" ? "leading-normal" : preferences.lineHeight === "loose" ? "leading-loose" : "leading-relaxed"}
+                    ${preferences.letterSpacing === "wide" ? "tracking-wide" : preferences.letterSpacing === "wider" ? "tracking-wider" : "tracking-normal"}
+                  `}
+                  style={{
+                    fontSize: `${Math.min(preferences.fontSize, 18)}px`,
+                    opacity: preferences.textOpacity,
+                  }}
+                >
+                  Pewnego razu, w małej wiosce nad brzegiem jeziora, żyła młoda dziewczyna imieniem Anna.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Footer */}
+          <div className="p-5 border-t border-border/30">
+            <button
+              onClick={onClose}
+              className="w-full btn-primary py-3"
+            >
+              Done
+            </button>
           </div>
         </div>
       </div>

@@ -2,16 +2,16 @@
 
 import { useTheme } from "@/contexts/ThemeContext";
 
+// Sun icon for light mode
 const SunIcon = ({ className }: { className?: string }) => (
   <svg
-    xmlns="http://www.w3.org/2000/svg"
+    className={className}
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
-    strokeWidth="2"
+    strokeWidth={2}
     strokeLinecap="round"
     strokeLinejoin="round"
-    className={className}
   >
     <circle cx="12" cy="12" r="4" />
     <path d="M12 2v2" />
@@ -25,16 +25,16 @@ const SunIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
+// Moon icon for dark mode
 const MoonIcon = ({ className }: { className?: string }) => (
   <svg
-    xmlns="http://www.w3.org/2000/svg"
+    className={className}
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
-    strokeWidth="2"
+    strokeWidth={2}
     strokeLinecap="round"
     strokeLinejoin="round"
-    className={className}
   >
     <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
   </svg>
@@ -51,22 +51,54 @@ export default function ThemeSelector() {
     });
   };
 
-  // Show the icon for the current theme
   const isDarkMode = preferences.theme === "dark";
-  const IconComponent = isDarkMode ? MoonIcon : SunIcon;
-  const currentThemeLabel = isDarkMode ? "Dark" : "Light";
-  const nextThemeLabel = isDarkMode ? "Light" : "Dark";
-  const ariaLabel = `Switch from ${currentThemeLabel} to ${nextThemeLabel} mode`;
+  const ariaLabel = isDarkMode
+    ? "Switch to light mode"
+    : "Switch to dark mode";
 
   return (
     <button
       onClick={toggleTheme}
-      className="flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-surface-elevated/50 text-muted-foreground transition-all duration-200 hover:text-primary hover:bg-surface"
+      className="group relative p-2.5 rounded-lg
+        text-text-secondary hover:text-primary
+        hover:bg-primary/5
+        transition-all duration-300"
       type="button"
       aria-label={ariaLabel}
       title={ariaLabel}
     >
-      <IconComponent className="h-5 w-5" />
+      {/* Icon container with rotation animation */}
+      <div className="relative w-5 h-5">
+        {/* Sun icon */}
+        <SunIcon
+          className={`
+            absolute inset-0 w-5 h-5
+            transition-all duration-500
+            ${isDarkMode
+              ? "opacity-0 rotate-90 scale-50"
+              : "opacity-100 rotate-0 scale-100"
+            }
+          `}
+        />
+        {/* Moon icon */}
+        <MoonIcon
+          className={`
+            absolute inset-0 w-5 h-5
+            transition-all duration-500
+            ${isDarkMode
+              ? "opacity-100 rotate-0 scale-100"
+              : "opacity-0 -rotate-90 scale-50"
+            }
+          `}
+        />
+      </div>
+
+      {/* Subtle glow effect on hover */}
+      <div
+        className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100
+          bg-gradient-to-br from-primary/10 to-transparent
+          transition-opacity duration-300 pointer-events-none"
+      />
     </button>
   );
 }
