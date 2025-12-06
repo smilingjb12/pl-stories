@@ -10,6 +10,7 @@ const defaultPreferences: ReadingPreferences = {
   lineHeight: "relaxed",
   letterSpacing: "normal",
   textOpacity: 1.0,
+  textAlign: "left",
 };
 
 interface ThemeContextType {

@@ -20,4 +20,5 @@ export interface ReadingPreferences {
   lineHeight: 'normal' | 'relaxed' | 'loose';
   letterSpacing: 'normal' | 'wide' | 'wider';
   textOpacity: number; // 0.3 to 1.0
+  textAlign: 'left' | 'justify';
 }
