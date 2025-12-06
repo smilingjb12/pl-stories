@@ -11,6 +11,9 @@
   "author": "",
   "license": "ISC",
   "description": "",
+  "engines": {
+    "node": ">=20.9.0"
+  },
   "dependencies": {
     "convex": "^1.25.4",
     "next": "^16.0.7",
