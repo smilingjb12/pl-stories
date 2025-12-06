@@ -117,7 +117,7 @@ export default function ReadingSettings({
                 <label className="text-sm font-medium text-foreground">
                   Font Size
                 </label>
-                <span className="text-sm font-semibold text-primary">
+                <span className="text-sm font-semibold text-primary-color">
                   {preferences.fontSize}px
                 </span>
               </div>
@@ -146,7 +146,7 @@ export default function ReadingSettings({
                 <label className="text-sm font-medium text-foreground">
                   Text Opacity
                 </label>
-                <span className="text-sm font-semibold text-primary">
+                <span className="text-sm font-semibold text-primary-color">
                   {Math.round(preferences.textOpacity * 100)}%
                 </span>
               </div>
@@ -183,7 +183,7 @@ export default function ReadingSettings({
                       px-3 py-2.5 rounded-lg text-sm font-medium
                       transition-all duration-300
                       ${preferences.lineHeight === option.value
-                        ? "bg-primary text-white shadow-md shadow-primary/25"
+                        ? "bg-primary-solid text-white shadow-md"
                         : "bg-surface text-text-secondary hover:bg-surface-elevated hover:text-foreground border border-border/50"
                       }
                     `}
@@ -208,7 +208,7 @@ export default function ReadingSettings({
                       px-3 py-2.5 rounded-lg text-sm font-medium
                       transition-all duration-300
                       ${preferences.letterSpacing === option.value
-                        ? "bg-primary text-white shadow-md shadow-primary/25"
+                        ? "bg-primary-solid text-white shadow-md"
                         : "bg-surface text-text-secondary hover:bg-surface-elevated hover:text-foreground border border-border/50"
                       }
                     `}
@@ -219,7 +219,6 @@ export default function ReadingSettings({
               </div>
             </div>
 
-<<<<<<< HEAD
             {/* Preview */}
             <div className="space-y-3">
               <label className="text-sm font-medium text-foreground block">
@@ -251,29 +250,6 @@ export default function ReadingSettings({
             >
               Done
             </button>
-=======
-            {/* Text Alignment */}
-            <div>
-              <label className="block text-sm font-medium mb-2">
-                Text Alignment
-              </label>
-              <div className="grid grid-cols-2 gap-2">
-                {(["left", "justify"] as const).map((align) => (
-                  <button
-                    key={align}
-                    onClick={() => updatePreference("textAlign", align)}
-                    className={`p-2 text-center rounded-lg border transition-all duration-200 ${
-                      preferences.textAlign === align
-                        ? "bg-primary text-primary-foreground border-primary shadow-lg"
-                        : "border-border hover:border-primary hover:shadow-sm hover:bg-gradient-to-r hover:from-surface-elevated/50 hover:to-surface/30"
-                    }`}
-                  >
-                    {align.charAt(0).toUpperCase() + align.slice(1)}
-                  </button>
-                ))}
-              </div>
-            </div>
->>>>>>> c8eea6095e3cef734fdf43f5226fc74a76373ae1
           </div>
         </div>
       </div>
