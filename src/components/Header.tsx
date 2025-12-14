@@ -2,12 +2,14 @@
 
 import { useRouter } from "next/navigation";
 import ThemeSelector from "./ThemeSelector";
+import { useScrollDirection } from "@/hooks/useScrollDirection";
 
 interface HeaderProps {
   title: string;
   showBackButton?: boolean;
   showSettings?: boolean;
   onSettingsClick?: () => void;
+  hideOnScroll?: boolean;
 }
 
 export default function Header({
@@ -15,11 +17,23 @@ export default function Header({
   showBackButton = false,
   showSettings = false,
   onSettingsClick,
+  hideOnScroll = false,
 }: HeaderProps) {
   const router = useRouter();
+  const { scrollDirection, isAtTop } = useScrollDirection({ threshold: 10 });
+
+  // Determine if header should be visible
+  // Show when: not using hideOnScroll, at top, or scrolling up
+  const isVisible = !hideOnScroll || isAtTop || scrollDirection === "up";
 
   return (
-    <header className="sticky top-0 z-40 glassmorphism border-b border-border/30">
+    <header
+      className={`
+        sticky top-0 z-40 glassmorphism border-b border-border/30
+        transition-transform duration-300 ease-in-out
+        ${hideOnScroll && !isVisible ? "-translate-y-full" : "translate-y-0"}
+      `}
+    >
       <div className="max-w-4xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-16 sm:h-18">
           {/* Left side - Back button or spacer */}
