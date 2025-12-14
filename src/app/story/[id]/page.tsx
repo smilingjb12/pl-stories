@@ -38,6 +38,10 @@ export default function StoryPage() {
   const { preferences, updatePreferences } = useTheme();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [params.id]);
+
+  useEffect(() => {
     if (params.id) {
       fetchStory(params.id as string);
     }
