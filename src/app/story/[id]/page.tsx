@@ -118,6 +118,7 @@ export default function StoryPage() {
         showBackButton={true}
         showSettings={true}
         onSettingsClick={() => setShowSettings(true)}
+        hideOnScroll={true}
       />
 
       {/* Story Content */}
