@@ -1,16 +1,18 @@
-export interface Story {
-  id: string;
+export interface Chapter {
+  _id: string;
+  number: number;
   title: string;
-  filename: string;
   content: string;
-  isRead: boolean;
+  paragraphIndex: number;
+  totalParagraphs: number;
 }
 
-export interface StoryMetadata {
-  id: string;
+export interface ChapterMetadata {
+  _id: string;
+  number: number;
   title: string;
-  filename: string;
-  isRead: boolean;
+  paragraphIndex: number;
+  totalParagraphs: number;
 }
 
 export interface ReadingPreferences {

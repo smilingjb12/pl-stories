@@ -26,11 +26,14 @@ export default function Header({
           <div className="w-24 flex justify-start">
             {showBackButton && (
               <button
-                onClick={() => router.push("/")}
+                onClick={() => {
+                  window.scrollTo({ top: 0, behavior: "instant" });
+                  router.push("/");
+                }}
                 className="group flex items-center gap-2 px-3 py-2 -ml-3 rounded-lg
                   text-text-secondary hover:text-primary
                   transition-all duration-300"
-                aria-label="Go back to stories"
+                aria-label="Go back to chapters"
               >
                 <svg
                   className="w-5 h-5 transition-transform duration-300 group-hover:-translate-x-1"

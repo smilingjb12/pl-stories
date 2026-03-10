@@ -25,8 +25,8 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: "Polish Stories",
-  description: "A warm, sophisticated reading experience for Polish stories",
+  title: "Harry Potter i Kamień Filozoficzny",
+  description: "A warm, sophisticated reading experience for Harry Potter in Polish",
 };
 
 // Inline script to prevent flash of wrong theme

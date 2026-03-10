@@ -16,35 +16,50 @@ npm start
 
 # Run linting
 npm run lint
+
+# Push Convex schema/functions
+CONVEX_DEPLOYMENT="dev:outgoing-cobra-625" npx convex dev --once
+
+# Re-seed chapters (if needed)
+node seed-chapters.js && npx convex import --table chapters --replace chapters.jsonl
 ```
 
 ## Architecture Overview
 
-This is a Next.js 16 reading application for Polish stories with customizable reading preferences. The app uses TypeScript, React 19, and Tailwind CSS for styling.
+This is a Next.js 16 single-book chapter reader for "Harry Potter i Kamień Filozoficzny" (Polish). The app uses TypeScript, React 19, Tailwind CSS, and Convex for backend storage.
 
 ### Core Structure
 
-- **File-based story management**: Stories are stored as `.txt` files in the `/stories` directory, automatically loaded and served via API routes
+- **Convex backend**: Chapters stored in `chapters` table with `number`, `title`, `content`, `scrollProgress` fields
 - **Theme system**: Custom theme context with data attributes (`data-theme`) for light/dark modes
 - **Reading preferences**: Font size, family, line height, letter spacing, and text opacity stored in localStorage
+- **Scroll-based progress**: Per-chapter scroll progress tracked and persisted to Convex (debounced 5s, 2% threshold)
 - **Mobile-first responsive design**: Optimized for mobile reading with sticky headers and touch-friendly controls
 
 ### Key Components
 
 - `ThemeContext` - Global state for reading preferences with localStorage persistence
 - `ReadingSettings` - Modal component for customizing reading experience
-- `ProgressBar` - Reading progress indicator
-- Story loading system in `lib/stories.ts` with automatic title extraction
+- `ProgressBar` - Visual scroll progress indicator at top of reader
+- `useScrollProgress` - Hook for tracking/restoring scroll position per chapter
 
-### API Routes
+### Convex Functions (`convex/chapters.ts`)
 
-- `/api/stories` - Returns all available stories with metadata
-- `/api/stories/[id]` - Returns specific story content by filename ID
+- `listMetadata` — All chapters ordered by number, without content (home page)
+- `getByNumber({ number })` — Single chapter with full content (reader page)
+- `updateScrollProgress({ number, scrollProgress })` — Mutation to save reading progress
 
-### Story Format
+### Pages
 
-Stories are text files named with pattern `{number}-{title}.txt`. The system automatically extracts titles and sorts numerically. Content is displayed with preserved whitespace using `whitespace-pre-wrap`.
+- `/` — Home page with chapter list, per-chapter progress bars, overall completion count
+- `/chapter/[number]` — Chapter reader with scroll tracking, prev/next navigation
+
+### Data Seeding
+
+- Source files: `C:\Repos\random\chapter{1-17}.txt`
+- `seed-chapters.js` parses chapter headers (ROZDZIAŁ / ordinal / ALL-CAPS title lines) and generates `chapters.jsonl`
+- Title format: "CHŁOPIEC, KTÓRY PRZEŻYŁ" → "Chłopiec, Który Przeżył" (title case)
 
 ### Styling System
 
-Uses Tailwind with custom CSS variables for theming. Font families are configured as Tailwind font utilities (font-inter, font-lato, etc.). Theme switching is handled via data attributes on the document element. Inter is the default font family.
+Uses Tailwind with custom CSS variables for theming. Font families are configured as Tailwind font utilities. Theme switching is handled via data attributes on the document element. DM Sans is the default font family.
